@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Footman",
+    "icon": "",
+    "style": "font-size: 20px"
+  },
+  {
+    "id": 2,
+    "title": "",
+    "icon": "",
+    "style": ""
+  },
+  {
+    "id": 3,
+    "title": "Sell",
+    "icon": "",
+    "style": "font-size: 15px"
+  },
+  {
+    "id": 4,
+    "title": "Buy",
+    "icon": "",
+    "style": "font-size: 15px"
+  },
+  {
+    "id": 5,
+    "title": "Resources",
+    "icon": "",
+    "style": "font-size: 15px"
+  },
+  {
+    "id": 6,
+    "title": "Join our Community",
+    "icon": "",
+    "style": "font-size: 15px"
+  }
+]

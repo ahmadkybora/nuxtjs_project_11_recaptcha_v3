@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "icon": "fas fa-info",
+    "color": "text-primary",
+    "route": "/product/show"
+  },
+  {
+    "id": 2,
+    "icon": "fas fa-heart",
+    "color": "text-danger",
+    "route": "/favorite"
+  },
+  {
+    "id": 3,
+    "icon": "fa fa-thumbs-down",
+    "color": "text-primary",
+    "route": "/dislike"
+  },
+  {
+    "id": 4,
+    "icon": "fa fa-thumbs-up",
+    "color": "text-primary",
+    "route": "/like"
+  }
+]

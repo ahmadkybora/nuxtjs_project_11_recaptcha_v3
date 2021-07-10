@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "icon": "fas fa-shopping-basket",
+    "color": "text-success",
+    "route":"",
+    "style": "font-size: 20px"
+  },
+  {
+    "id": 2,
+    "icon": "fas fa-info",
+    "color": "text-success",
+    "route":"",
+    "style": "font-size: 20px"
+  },
+  {
+    "id": 3,
+    "icon": "fas fa-info",
+    "color": "text-success",
+    "route":"",
+    "style": "font-size: 15px"
+  },
+  {
+    "id": 4,
+    "icon": "fas fa-heart",
+    "color": "text-success",
+    "route":"",
+    "style": "font-size: 15px"
+  },
+  {
+    "id": 5,
+    "icon": "fa fa-thumbs-down",
+    "color": "text-primary",
+    "route":"",
+    "style": "font-size: 15px"
+  },
+  {
+    "id": 6,
+    "icon": "fa fa-thumbs-up",
+    "color": "text-primary",
+    "route":"",
+    "style": "font-size: 15px"
+  }
+]

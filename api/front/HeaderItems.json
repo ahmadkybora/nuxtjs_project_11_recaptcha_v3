@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Home",
+    "icon": "fas fa-apple-alt",
+    "color": "background-color: skyblue",
+    "route": "/"
+  },
+  {
+    "id": 2,
+    "title": "Products",
+    "icon": "fas fa-atom",
+    "color": "background-color: skyblue",
+    "route": "/products"
+  },
+  {
+    "id": 3,
+    "title": "Articles",
+    "icon": "fas fa-book",
+    "color": "background-color: skyblue",
+    "route": "/articles"
+  },
+  {
+    "id": 4,
+    "title": "Threads",
+    "icon": "fas fa-book",
+    "color": "background-color: skyblue",
+    "route": "/threads"
+  },
+  {
+    "id": 5,
+    "title": "About",
+    "icon": "fas fa-car-side",
+    "color": "background-color: skyblue",
+    "route": "/about"
+  },
+  {
+    "id": 6,
+    "title": "Contact",
+    "icon": "fas fa-coins",
+    "color": "background-color: skyblue",
+    "route": "/contact"
+  }
+]

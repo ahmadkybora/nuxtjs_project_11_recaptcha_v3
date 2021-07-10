@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "title": "Employees",
+    "icon": "fas fa-apple-alt",
+    "color": "background-color: skyblue",
+    "route": "/panel/employees"
+  },
+  {
+    "id": 2,
+    "title": "Users",
+    "icon": "fas fa-atom",
+    "color": "background-color: skyblue",
+    "route": "/panel/users"
+  },
+  {
+    "id": 3,
+    "title": "Brands",
+    "icon": "fas fa-book",
+    "color": "background-color: skyblue",
+    "route": "/panel/brands"
+  },
+  {
+    "id": 4,
+    "title": "ProductCategories",
+    "icon": "fas fa-book",
+    "color": "background-color: skyblue",
+    "route": "/panel/productCategories"
+  },
+  {
+    "id": 5,
+    "title": "Product",
+    "icon": "fas fa-car-side",
+    "color": "background-color: skyblue",
+    "route": "/panel/products"
+  },
+  {
+    "id": 6,
+    "title": "ArticleCategories",
+    "icon": "fas fa-coins",
+    "color": "background-color: skyblue",
+    "route": "/panel/articleCategories"
+  },
+  {
+    "id": 7,
+    "title": "Article",
+    "icon": "fas fa-concierge-bell",
+    "color": "background-color: skyblue",
+    "route": "/panel/articles"
+  },
+  {
+    "id": 8,
+    "title": "Orders",
+    "icon": "fas fa-concierge-bell",
+    "color": "background-color: skyblue",
+    "route": "/panel/orders"
+  }
+]

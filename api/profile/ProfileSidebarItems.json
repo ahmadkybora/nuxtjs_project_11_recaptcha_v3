@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Dashboard",
+    "icon": "fa fa-envelope",
+    "route": "/profile"
+  },
+  {
+    "id": 2,
+    "title": "My Profile",
+    "icon": "fa fa-envelope",
+    "route": "/profile/my-profile"
+  },
+  {
+    "id": 3,
+    "title": "My Transactions",
+    "icon": "fa fa-envelope",
+    "route": "/profile/my-transactions"
+  },
+  {
+    "id": 4,
+    "title": "My Orders",
+    "icon": "fa fa-envelope",
+    "route": "/profile/my-orders"
+  },
+  {
+    "id": 5,
+    "title": "My Favorites",
+    "icon": "fa fa-envelope",
+    "route": "/profile/my-favorites"
+  },
+  {
+    "id": 6,
+    "title": "My Carts",
+    "icon": "fa fa-envelope",
+    "route": "/profile/my-cart"
+  }
+]

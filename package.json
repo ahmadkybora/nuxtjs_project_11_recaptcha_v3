@@ -1,0 +1,53 @@
+{
+  "name": "nuxtjs_project_4",
+  "description": "this is my project",
+  "author": "ahmad montazeri",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@nuxt/content": "^1.14.0",
+    "@nuxt/typescript-runtime": "^2.1.0",
+    "@nuxtjs/auth-next": "5.0.0-1622918202.e815752",
+    "@nuxtjs/axios": "^5.13.6",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "core-js": "^3.8.3",
+    "dropzone": "^5.9.2",
+    "express": "^4.17.1",
+    "jquery": "^3.6.0",
+    "laravel-vue-pagination": "^2.3.1",
+    "nuxt": "^2.14.12",
+    "nuxt-dropzone": "^1.0.4",
+    "nuxt-moment": "^1.0.5",
+    "phaser": "^3.55.2",
+    "popper.js": "^1.16.1",
+    "sequelize": "^6.5.0",
+    "sweetalert2": "^10.15.7",
+    "vee-validate": "^3.4.9",
+    "vform": "^1.0.1",
+    "vue-laravel-paginex": "^2.0.3",
+    "vue-owl-carousel": "^2.0.3",
+    "vue2-dropzone": "^3.6.0",
+    "vuejs-paginate": "^2.1.0",
+    "vuelidate": "^0.7.6"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.14.12",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/pwa": "^3.3.5",
+    "@vue/test-utils": "^1.1.2",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.3",
+    "vue-jest": "^3.0.4"
+  }
+}
