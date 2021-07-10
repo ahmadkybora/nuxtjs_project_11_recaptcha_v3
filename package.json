@@ -17,6 +17,7 @@
     "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/auth-next": "5.0.0-1622918202.e815752",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/recaptcha": "^1.0.4",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "core-js": "^3.8.3",

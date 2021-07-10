@@ -46,12 +46,22 @@ export default {
         // https://go.nuxtjs.dev/content
         '@nuxt/content',
         '@nuxtjs/auth-next',
+        '@nuxtjs/recaptcha',
     ],
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
         baseURL: 'http://localhost:3001/api/',
     },
+
+    publicRuntimeConfig: {
+        recaptcha: {
+            hideBadge: true,
+            siteKey: '6LdRkYgbAAAAAIlAwuQDzdQow7RvJbkLa40ZLCnE',
+            version: 3,
+        }
+    },
+
     /*
  ** Auth module configuration
  */
@@ -286,6 +296,8 @@ export default {
     },
 
     /*env: {
-      baseUrl: process.env.BASE_URL || 'http://localhost:8000/api/'
+        baseUrl: process.env.BASE_URL || 'http://localhost:8000/api/',
+        RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY || '6LdRkYgbAAAAAIlAwuQDzdQow7RvJbkLa40ZLCnE',
+        RECAPTCHA_SECRET_KEY: '6LdRkYgbAAAAAChRjDw00qJnpH8bmaW_Unxlytro',
     }*/
 }
