@@ -16,6 +16,10 @@
                     <recaptcha></recaptcha>
                 </div>
                 <div class="form-group">
+                    <label>Remember me</label>
+                    <input type="checkbox" value="remember_me"/>
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
             </form>
@@ -37,9 +41,9 @@
         },
         methods: {
             async onLogin() {
-                const token = await this.$recaptcha.execute('login');
-                console.log('ReCaptcha token:', token);
+                const google_rECAPTCHA = await this.$recaptcha.execute('login');
                 const Login = {
+                    google_rECAPTCHA,
                     username: this.username,
                     password: this.password,
                 };

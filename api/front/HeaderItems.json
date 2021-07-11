@@ -36,6 +36,13 @@
   },
   {
     "id": 6,
+    "title": "Chat Room",
+    "icon": "fas fa-coins",
+    "color": "background-color: skyblue",
+    "route": "/chat-room"
+  },
+  {
+    "id": 7,
     "title": "Contact",
     "icon": "fas fa-coins",
     "color": "background-color: skyblue",

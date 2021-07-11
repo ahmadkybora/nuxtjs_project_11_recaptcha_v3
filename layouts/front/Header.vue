@@ -4,10 +4,10 @@
         <nav class="navbar navbar-expand-lg navbar-light shadow-md">
             <ul class="navbar-nav justify-content-center w-100 list-unstyled my-3">
                 <li class="nav-item mx-5">
-                    <a href="#" class="nav-link">
+                    <nuxt-link to="/" class="nav-link">
                         <i class="fa fa-home"></i>
                         Home
-                    </a>
+                    </nuxt-link>
                 </li>
                 <li class="nav-item mx-5 dropdown">
                     <a href="#"
@@ -59,6 +59,12 @@
                         <i class=""></i>
                         Contact Us
                     </a>
+                </li>
+                <li class="nav-item">
+                    <nuxt-link to="/chats" class="nav-link">
+                        <i class=""></i>
+                        Chat Room
+                    </nuxt-link>
                 </li>
             </ul>
         </nav>

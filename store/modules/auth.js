@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import Swal from "sweetalert2";
+import {success, error} from '../../helpers/ErrorHandler';
 
 const state = () => ({
     tokenEmployee: window.localStorage.getItem('token-employee'),
@@ -262,6 +263,7 @@ const actions = {
     async isUserLogin(context, payload) {
         try {
             const login = {
+                google_rECAPTCHA: payload.google_rECAPTCHA,
                 username: payload.username,
                 password: payload.password,
             };
@@ -316,8 +318,9 @@ const actions = {
 
                 this.$router.push('/')
             }
-        } catch (e) {
-            console.log(e);
+        } catch (err) {
+            //error(err);
+            //console.log(e);
             //this.error = e.response.data.message
         }
         /*context.state.isUserLogin.first_name = user.first_name;
