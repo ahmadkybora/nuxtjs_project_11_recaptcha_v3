@@ -74,7 +74,7 @@ export default {
     publicRuntimeConfig: {
         recaptcha: {
             hideBadge: true,
-            siteKey: '6LdRkYgbAAAAAIlAwuQDzdQow7RvJbkLa40ZLCnE',
+            siteKey: '6LfMKY4bAAAAAAg32Tif3G1PotoBIxvHUTOEwKh5',
             version: 3,
         }
     },
@@ -289,10 +289,17 @@ export default {
     /*
     router middleware log
      */
-    router: {
-        //extendRoutes(routes, resolve) {},
+
+    /*router: {
+        extendRoutes(routes, resolve) {
+            routes.push({
+                name: '404',
+                path: 'errors/404',
+                component: resolve(__dirname, '/errors/404.vue')
+            })
+        },
         //middleware: ['auth']
-    },
+    },*/
 
     serverMiddleware: [
         /*bodyParser.json(),

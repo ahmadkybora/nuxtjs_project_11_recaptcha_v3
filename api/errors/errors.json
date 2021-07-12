@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "statusCode": "401",
+    "message": "unAuthorized!",
+    "icon": "",
+    "style": "font-size: 20px",
+    "img": ""
+  },
+  {
+    "id": 2,
+    "statusCode": "403",
+    "message": "Forbidden!",
+    "icon": "",
+    "style": "font-size: 20px",
+    "img": ""
+  },
+  {
+    "id": 3,
+    "statusCode": "404",
+    "message": "Not Found!",
+    "icon": "",
+    "style": "font-size: 20px",
+    "img": ""
+  },
+  {
+    "id": 4,
+    "statusCode": "500",
+    "message": "Service Is Unavailable!",
+    "icon": "",
+    "style": "font-size: 20px",
+    "img": ""
+  },
+  {
+    "id": 5,
+    "statusCode": "503",
+    "message": "Service Is Unavailable!",
+    "icon": "",
+    "style": "font-size: 20px",
+    "img": ""
+  }
+]

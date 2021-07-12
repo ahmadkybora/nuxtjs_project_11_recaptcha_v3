@@ -281,7 +281,7 @@ const actions = {
                 console.log(err);
             });*/
             const auth = await this.$auth.loginWith('local', {data: login});
-                if (auth) {
+            if (auth) {
 
                 const username = auth.data.data.username;
                 const full_name = auth.data.data.first_name + ' ' + auth.data.data.last_name;
@@ -319,6 +319,8 @@ const actions = {
                 this.$router.push('/')
             }
         } catch (err) {
+            error(err);
+            return this.$router.push('errors/err_401');
             //error(err);
             //console.log(e);
             //this.error = e.response.data.message
@@ -382,7 +384,25 @@ const actions = {
             })
             .catch(err => {
             })*/
-    }
+    },
+
+    async forgetPassword(context, payload) {
+        const login = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            current_password: payload.current_password,
+            new_password: payload.new_password,
+            confirmation_password: payload.confirmation_password,
+        };
+        await this.$axios.post('forget-password', login)
+            .then((res) => {
+                success(res);
+            }).catch((err) => {
+                error(err)
+            });
+    },
+
+    async resetPassword() {
+    },
 };
 
 const mutations = {

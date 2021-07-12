@@ -1,15 +1,19 @@
 <template>
-    <div></div>
+    <div>
+        <Navbar/>
+        <Header/>
+        <Nuxt/>
+        <Footer/>
+    </div>
 </template>
 
 <script>
+    import Navbar from "./errors/Navbar";
+    import Header from "./errors/Header";
+    import Footer from "./errors/Footer";
     export default {
         name: "error",
-      methods: {
-          main() {
-            this.$router;
-          }
-      }
+        components: {Footer, Navbar, Header}
     }
 </script>
 

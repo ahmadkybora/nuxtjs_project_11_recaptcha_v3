@@ -1,7 +1,6 @@
 <template>
     <div class="container col-md-4 mt-5">
         <div class="jumbotron">
-            <nuxt-link to="/" class="btn btn-success">Home</nuxt-link>
             <h3>Login Form</h3>
             <form @submit.prevent="onLogin()">
                 <div class="form-group">
@@ -12,18 +11,25 @@
                     <input type="password" class="form-control" v-model="password" name="password" id="password"
                            placeholder="Password">
                 </div>
-                <div class="form-group">
-                    <recaptcha></recaptcha>
-                </div>
+
                 <div class="form-group">
                     <label>Remember me</label>
                     <input type="checkbox" value="remember_me"/>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Login</button>
+                    <nuxt-link to="/forget-password" class="text-primary">Forget Password?</nuxt-link>
                 </div>
             </form>
-            <nuxt-link to="/register" class="btn btn-primary">Register</nuxt-link>
+            <div class="form-group">
+                <p>
+                    Dont have account?
+                    <nuxt-link to="/register" class="text-primary">Register</nuxt-link>
+                </p>
+            </div>
+            <div class="form-group">
+                <nuxt-link to="/" class="text-success">Go to Home</nuxt-link>
+            </div>
         </div>
     </div>
 </template>
@@ -48,6 +54,9 @@
                     password: this.password,
                 };
                 return this.$store.dispatch('Auth/isUserLogin', Login);
+            },
+            beforeDestroy() {
+                this.$recaptcha.destroy()
             }
         },
         async mounted() {
