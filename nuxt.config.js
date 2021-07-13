@@ -23,6 +23,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+        //'@/plugins/axios.js',
         '@/plugins/index.js',
         '@/plugins/internal.js',
     ],
@@ -319,9 +320,10 @@ export default {
         continuous: true
     },
 
-    /*env: {
-        baseUrl: process.env.BASE_URL || 'http://localhost:8000/api/',
+    env: {
+        baseUrl: 'nu'
+        /*baseUrl: process.env.BASE_URL || 'http://localhost:8000/api/',
         RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY || '6LdRkYgbAAAAAIlAwuQDzdQow7RvJbkLa40ZLCnE',
-        RECAPTCHA_SECRET_KEY: '6LdRkYgbAAAAAChRjDw00qJnpH8bmaW_Unxlytro',
-    }*/
+        RECAPTCHA_SECRET_KEY: '6LdRkYgbAAAAAChRjDw00qJnpH8bmaW_Unxlytro',*/
+    }
 }

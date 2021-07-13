@@ -40,7 +40,7 @@ export const error = (err) => {
         case 401:
             Swal.fire('Warning!', err.response.data.message, 'warning')
                 .then(() => {
-                    //return 401;
+                    return 401;
                 });
             break;
         case 403:

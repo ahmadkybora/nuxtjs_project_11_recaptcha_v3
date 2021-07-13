@@ -4,39 +4,39 @@
     "statusCode": "401",
     "message": "unAuthorized!",
     "icon": "",
-    "style": "font-size: 20px",
-    "img": ""
+    "style": "width: 450px; height: 250px",
+    "img": "/_nuxt/assets/img/401-error.jpg"
   },
   {
     "id": 2,
     "statusCode": "403",
     "message": "Forbidden!",
     "icon": "",
-    "style": "font-size: 20px",
-    "img": ""
+    "style": "width: 450px; height: 250px",
+    "img": "/_nuxt/assets/img/403-error.png"
   },
   {
     "id": 3,
     "statusCode": "404",
     "message": "Not Found!",
     "icon": "",
-    "style": "font-size: 20px",
-    "img": ""
+    "style": "width: 450px; height: 250px",
+    "img": "/_nuxt/assets/img/404-error.jpg"
   },
   {
     "id": 4,
     "statusCode": "500",
     "message": "Service Is Unavailable!",
     "icon": "",
-    "style": "font-size: 20px",
-    "img": ""
+    "style": "width: 450px; height: 250px",
+    "img": "/_nuxt/assets/img/500-error.jpg"
   },
   {
     "id": 5,
     "statusCode": "503",
     "message": "Service Is Unavailable!",
     "icon": "",
-    "style": "font-size: 20px",
-    "img": ""
+    "style": "width: 450px; height: 250px",
+    "img": "/_nuxt/assets/img/503-error.jpg"
   }
 ]

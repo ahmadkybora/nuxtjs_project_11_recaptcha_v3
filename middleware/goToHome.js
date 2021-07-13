@@ -1,5 +1,5 @@
-export default function ({store, redirect}) {
-    console.log(store);
-    console.log(redirect);
-    redirect('errors/401')
+import axios from 'axios';
+
+export default function ({app, store, redirect}) {
+    return app.$router.push('/');
 }

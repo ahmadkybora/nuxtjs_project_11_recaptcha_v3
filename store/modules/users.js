@@ -376,7 +376,35 @@ const actions = {
                         break;
                 }
             })
-    }
+    },
+
+    async forgetPassword(context, payload) {
+        const forgetPassword = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            email: payload.email,
+        };
+        await this.$axios.post('forget-password', forgetPassword)
+            .then((res) => {
+                success(res);
+            }).catch((err) => {
+                error(err)
+            });
+    },
+
+    async resetPassword(context, payload) {
+        const resetPassword = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            current_password: payload.current_password,
+            new_password: payload.new_password,
+            confirmation_password: payload.confirmation_password,
+        };
+        await this.$axios.post('profile/reset-password', resetPassword)
+            .then((res) => {
+                success(res);
+            }).catch((err) => {
+                error(err)
+            });
+    },
 };
 
 const mutations = {

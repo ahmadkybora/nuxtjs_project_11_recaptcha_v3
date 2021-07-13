@@ -1,15 +1,35 @@
 <template>
-    <div>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 v-text="err_404.statusCode"></h1>
+            <h1 v-text="err_404.message"></h1>
+            <h1 v-text="err_404.icon"></h1>
+            <img :src="err_404.img" :style="err_404.style">
+        </div>
     </div>
 </template>
 
 <script>
+    import Errors from '../../api/errors/errors';
+
     export default {
-        layout: "error",
-        name: "404",
+        layout: 'auth',
+        name: "err_404",
+        component: {Errors},
         data() {
-            return {}
-        }
+            return {
+                items: Errors,
+            }
+        },
+        computed: {
+            err_404() {
+                for (let i = 0; i < this.items.length; i++) {
+                    if (this.items[i].statusCode === "404") {
+                        return this.items[i];
+                    }
+                }
+            }
+        },
     }
 </script>
 

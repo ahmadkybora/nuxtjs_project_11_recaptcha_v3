@@ -386,23 +386,6 @@ const actions = {
             })*/
     },
 
-    async forgetPassword(context, payload) {
-        const login = {
-            google_rECAPTCHA: payload.google_rECAPTCHA,
-            current_password: payload.current_password,
-            new_password: payload.new_password,
-            confirmation_password: payload.confirmation_password,
-        };
-        await this.$axios.post('forget-password', login)
-            .then((res) => {
-                success(res);
-            }).catch((err) => {
-                error(err)
-            });
-    },
-
-    async resetPassword() {
-    },
 };
 
 const mutations = {
