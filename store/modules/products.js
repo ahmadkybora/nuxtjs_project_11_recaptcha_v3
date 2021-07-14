@@ -26,7 +26,7 @@ const getters = {
 
 const actions = {
     async isProducts(context) {
-        await Axios.get(Axios.defaults.baseURL + 'products')
+        await this.$axios.get('products')
             .then(res => {
                 const isProducts = res.data.data;
                 //const popularProducts = res.data.data.popular_products;

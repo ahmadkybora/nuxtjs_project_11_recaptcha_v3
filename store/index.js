@@ -43,7 +43,7 @@ const createStore = () => {
 
     return new Vuex.Store({
         state: () => ({
-            true: 'true',
+            //true: 'true',
             /*      tokenEmployee: window.localStorage.getItem('token-employee'),
                   tokenUser: window.localStorage.getItem('token-user'),*/
             /*auth: {

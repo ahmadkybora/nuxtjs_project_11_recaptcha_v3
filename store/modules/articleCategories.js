@@ -1,5 +1,4 @@
-import Axios from 'axios'
-import Swal from "sweetalert2";
+import {success, error} from '../../helpers/ErrorHandler';
 
 const state = () => ({
     allArticleCategories: {},
@@ -32,12 +31,13 @@ const actions = {
      * @returns {Promise<void>}
      */
     async allArticleCategories(context, all = 'all') {
-        await Axios.get(Axios.defaults.baseURL + `panel/article-categories?all=${all}`)
+        await this.$axios.get(`panel/article-categories?all=${all}`)
             .then(res => {
                 const allArticleCategories = res.data.data;
                 context.commit('allArticleCategories', allArticleCategories);
+                success(res)
             }).catch(err => {
-                console.log(err)
+                error(err)
             })
     },
 
@@ -45,8 +45,8 @@ const actions = {
      *
      * @param context
      */
-    isArticleCategories(context) {
-        Axios.get(Axios.defaults.baseURL + 'article-categories')
+    async isArticleCategories(context) {
+        await this.$axios.get('article-categories')
             .then(res => {
                 const isArticleCategories = res.data.data;
                 console.log(isArticleCategories);
@@ -54,8 +54,8 @@ const actions = {
                 context.commit('isArticleCategories', isArticleCategories);
                 //context.commit('popularArticleCategories', popularArticleCategories)
             }).catch(err => {
-            console.log(err)
-        })
+                error(err)
+            })
     },
 
     /**
@@ -63,15 +63,22 @@ const actions = {
      * @param context
      */
     async getArticleCategories(context, page = 1) {
-        await Axios.get(Axios.defaults.baseURL + `panel/article-categories?page=${page}`)
+        await this.$axios.get(`panel/article-categories?page=${page}`)
             .then(res => {
                 const getArticleCategories = res.data.data;
                 context.commit('getArticleCategories', getArticleCategories);
             }).catch(err => {
-                console.log(err)
+                error(err)
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     * @constructor
+     */
     async RegisterArticleCategory(context, payload) {
         let formData = new FormData();
         formData.append('employeeId', payload.employeeId);
@@ -80,82 +87,19 @@ const actions = {
         formData.append('state', payload.state);
         formData.append('image', payload.image);
 
-        await Axios.post(Axios.defaults.baseURL + 'panel/article-categories/store', formData,
+        await this.$axios.post('panel/article-categories/store', formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
             })
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 201:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getArticleCategories = res.data.data;
-                                context.commit('getArticleCategories', getArticleCategories);
-                                this.$router.push('/panel/article-categories');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getArticleCategories = res.data.data;
+                context.commit('getArticleCategories', getArticleCategories);
+                success(res);
+                this.$router.push('/panel/article-categories');
             }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        if (err.response.data.errors === null) {
-                            Swal.fire('Warning!', err.response.data.message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', err.response.data.errors.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 404:
-                        Swal.fire('Warning!', '404 Not Found!', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 500:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                error(err);
             })
     },
 };

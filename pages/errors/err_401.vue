@@ -4,7 +4,7 @@
             <h1 v-text="err_401.statusCode" class="text-danger"></h1>
             <h1 v-text="err_401.message"></h1>
             <h1 v-text="err_401.icon"></h1>
-            <img :src="err_401.img" :style="err_401.style">
+            <img src="../../assets/img/401-error.jpg" :style="err_401.style">
         </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
     import Errors from '../../api/errors/errors';
 
     export default {
-        layout: 'auth',
+        layout: 'errorPage',
         name: "err_401",
         component: {Errors},
         data() {

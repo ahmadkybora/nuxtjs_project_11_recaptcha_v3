@@ -1,10 +1,10 @@
-import Swal from "sweetalert2";
 import {success, error} from '../../helpers/ErrorHandler';
 
 const state = () => ({
     getUsers: {},
     isUser: {},
     myUser: {},
+    forgetPassword: ''
 });
 
 const getters = {
@@ -18,7 +18,11 @@ const getters = {
 
 const actions = {
 
-    // panel
+    /*
+    |--------------------------------------------------------------------------
+    | Panel Part
+    |--------------------------------------------------------------------------
+    */
     /**
      *
      * @param context
@@ -36,6 +40,11 @@ const actions = {
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     */
     showUser(context, payload) {
         const userId = payload.id;
         const users = context.state.getUsers;
@@ -48,6 +57,11 @@ const actions = {
         }
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     */
     editUser(context, payload) {
         const userId = payload.id;
         const users = context.state.getUsers;
@@ -59,6 +73,12 @@ const actions = {
         }
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async isUserRegister(context, payload) {
         let formData = new FormData();
 
@@ -85,75 +105,22 @@ const actions = {
                 },
             })
             .then(res => {
-                switch (res.status) {
-                    case 201:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getUsers = res.data.data;
-                                context.commit('getUsers', getUsers);
-                                //this.$router.push('/panel/users');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
+                const getUsers = res.data.data;
+                context.commit('getUsers', getUsers);
+                //this.$router.push('/panel/users');
 
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
-            }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        if (err.response.data.errors === null) {
-                            Swal.fire('Warning!', err.response.data.message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', err.response.data.errors.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 404:
-                        Swal.fire('Warning!', '404 Not Found!', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 500:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+            })
+            .catch(err => {
+                error(err);
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async isUserUpdate(context, payload) {
         const isUpdate = {
             id: payload.id,
@@ -174,7 +141,7 @@ const actions = {
                 const getUsers = res.data.data;
                 context.commit('getUsers', getUsers);
             }).catch(err => {
-                console.log(err)
+                error(err);
             })
     },
 
@@ -192,7 +159,7 @@ const actions = {
                 const getUsers = state.getUsers.splice(idx,1)*/
                 //context.commit('deleteUser', getUsers);
             }).catch(err => {
-                console.log(err)
+                error(err);
             })
     },
 
@@ -209,69 +176,18 @@ const actions = {
 
         await this.$axios.get('panel/users/search', full_text_search)
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getUsers = res.data.data;
-                                context.commit('getUsers', getUsers);
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getUsers = res.data.data;
+                context.commit('getUsers', getUsers);
             }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 404:
-                        Swal.fire('Warning!', '404 Not Found!', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 500:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                error(err);
             })
     },
 
-    // profile
+    /*
+    |--------------------------------------------------------------------------
+    | Panel Profile
+    |--------------------------------------------------------------------------
+    */
     /**
      *
      * @param context
@@ -316,90 +232,30 @@ const actions = {
             }
         })
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const myUser = res.data.data;
-                                context.commit('myUser', myUser);
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const myUser = res.data.data;
+                context.commit('myUser', myUser);
             }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 404:
-                        Swal.fire('Warning!', '404 Not Found!', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 500:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Warning!', 'Service is unavailable', 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                error(err);
             })
     },
 
-    async forgetPassword(context, payload) {
-        const forgetPassword = {
-            google_rECAPTCHA: payload.google_rECAPTCHA,
-            email: payload.email,
-        };
-        await this.$axios.post('forget-password', forgetPassword)
-            .then((res) => {
-                success(res);
-            }).catch((err) => {
-                error(err)
-            });
-    },
-
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async resetPassword(context, payload) {
         const resetPassword = {
             google_rECAPTCHA: payload.google_rECAPTCHA,
             current_password: payload.current_password,
             new_password: payload.new_password,
-            confirmation_password: payload.confirmation_password,
+            new_confirmation_password: payload.new_confirmation_password,
         };
         await this.$axios.post('profile/reset-password', resetPassword)
             .then((res) => {
+                const forgetPassword = res.data.data;
+                context.commit('forgetPassword', forgetPassword);
                 success(res);
             }).catch((err) => {
                 error(err)
@@ -408,6 +264,9 @@ const actions = {
 };
 
 const mutations = {
+    forgetPassword(state, payload) {
+        state.forgetPassword = payload
+    },
     myUser(state, payload) {
         state.myUser = payload
     },

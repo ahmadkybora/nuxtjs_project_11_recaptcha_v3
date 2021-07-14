@@ -12,7 +12,7 @@
     <Articles/>
     <PopularArticles/>
     <ArticleCategories/>
-    <Nuxt/>
+    <!--<Nuxt/>-->
     <Footer/>
   </div>
 </template>

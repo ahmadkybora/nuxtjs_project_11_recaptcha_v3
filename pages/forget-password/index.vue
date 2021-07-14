@@ -27,10 +27,11 @@
         </div>
     </div>
 </template>
+
 <script>
     export default {
         //middleware: 'isUserLoggedIn',
-        middleware: 'auth',
+        //middleware: 'auth',
         layout: 'auth',
         name: 'index',
         data() {
@@ -45,7 +46,7 @@
                     google_rECAPTCHA,
                     email: this.email,
                 };
-                return this.$store.dispatch('Users/forgetPassword', forgetPassword);
+                return this.$store.dispatch('Auth/forgetPassword', forgetPassword);
             },
             beforeDestroy() {
                 this.$recaptcha.destroy()

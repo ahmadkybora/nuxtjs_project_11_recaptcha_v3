@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import goToHome from '../middleware/goToHome';
+//import goToHome from '../middleware/goToHome';
 
 export const success = (res) => {
     switch (res.status) {
@@ -9,7 +9,7 @@ export const success = (res) => {
                 });
             break;
         case 201:
-            Swal.fire('Warning!', res.data.message, 'warning')
+            Swal.fire('Success!', res.data.message, 'success')
                 .then(() => {
 
                 });

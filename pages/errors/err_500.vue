@@ -4,7 +4,7 @@
             <h1 v-text="err_500.statusCode"></h1>
             <h1 v-text="err_500.message"></h1>
             <h1 v-text="err_500.icon"></h1>
-            <img :src="err_500.img" :style="err_500.style">
+            <img src="../../assets/img/500-error.jpg" :style="err_500.style">
         </div>
     </div>
 </template>
@@ -14,7 +14,7 @@
 
     export default {
         layout: 'auth',
-        name: "err_500",
+        name: "errorPage",
         component: {Errors},
         data() {
             return {

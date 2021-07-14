@@ -56,21 +56,21 @@ export default {
         baseURL: 'http://localhost:3001/api/',
     },
 
-    io: {
+    /*io: {
         sockets: [ // Required
             { // At least one entry is required
                 name: 'home',
                 url: 'http://localhost:3000',
                 default: true,
-                vuex: { /* see section below */ },
-                namespaces: { /* see section below */ }
+                vuex: { /!* see section below *!/},
+                namespaces: { /!* see section below *!/}
             },
-            { name: 'work', url: 'http://somedomain1:3000' },
-            { name: 'car', url: 'http://somedomain2:3000' },
-            { name: 'tv', url: 'http://somedomain3:3000' },
-            { name: 'test', url: 'http://localhost:4000' }
+            {name: 'work', url: 'http://somedomain1:3000'},
+            {name: 'car', url: 'http://somedomain2:3000'},
+            {name: 'tv', url: 'http://somedomain3:3000'},
+            {name: 'test', url: 'http://localhost:4000'}
         ]
-    },
+    },*/
 
     publicRuntimeConfig: {
         recaptcha: {
@@ -294,11 +294,16 @@ export default {
     /*router: {
         extendRoutes(routes, resolve) {
             routes.push({
-                name: '404',
-                path: 'errors/404',
-                component: resolve(__dirname, '/errors/404.vue')
+                path: '/users/:id',
+                components: {
+                    default: resolve(__dirname, 'pages/users'), // or routes[index].component
+                    modal: resolve(__dirname, 'components/modal.vue')
+                },
+                chunkNames: {
+                    modal: 'components/modal'
+                }
             })
-        },
+        }
         //middleware: ['auth']
     },*/
 
@@ -320,10 +325,9 @@ export default {
         continuous: true
     },
 
-    env: {
-        baseUrl: 'nu'
-        /*baseUrl: process.env.BASE_URL || 'http://localhost:8000/api/',
+    /*env: {
+        baseUrl: process.env.BASE_URL || 'http://localhost:8000/api/',
         RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY || '6LdRkYgbAAAAAIlAwuQDzdQow7RvJbkLa40ZLCnE',
-        RECAPTCHA_SECRET_KEY: '6LdRkYgbAAAAAChRjDw00qJnpH8bmaW_Unxlytro',*/
-    }
+        RECAPTCHA_SECRET_KEY: '6LdRkYgbAAAAAChRjDw00qJnpH8bmaW_Unxlytro',
+    }*/
 }

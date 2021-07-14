@@ -4,14 +4,27 @@
             <h3>Login Form</h3>
             <form @submit.prevent="onLogin()">
                 <div class="form-group">
-                    <input type="text" class="form-control" v-model="username" name="username" id="username"
+                    <input type="text"
+                           class="form-control"
+                           v-model="username"
+                           name="username"
+                           id="username"
                            placeholder="Enter Username">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" v-model="password" name="password" id="password"
+                    <input type="password"
+                           class="form-control"
+                           v-model="password"
+                           name="password"
+                           id="password"
                            placeholder="Password">
                 </div>
-
+                <div class="form-group">
+                    <small>This site is protected by reCAPTCHA and the Google
+                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                    </small>
+                </div>
                 <div class="form-group">
                     <label>Remember me</label>
                     <input type="checkbox" value="remember_me"/>
@@ -55,9 +68,9 @@
                 };
                 return this.$store.dispatch('Auth/isUserLogin', Login);
             },
-            beforeDestroy() {
-                this.$recaptcha.destroy()
-            }
+            // beforeDestroy() {
+            //     this.$recaptcha.destroy()
+            // }
         },
         async mounted() {
             try {

@@ -1,5 +1,3 @@
-import Axios from 'axios'
-import Swal from "sweetalert2";
 import {success, error} from '../../helpers/ErrorHandler';
 
 const state = () => ({
@@ -25,9 +23,14 @@ const state = () => ({
         username: '',
     },
     isUserRegister: {},
+    //forgetPassword: window.localStorage.getItem('forget-password')
+    forgetPassword: ''
 });
 
 const getters = {
+    forgetPassword(state) {
+        return state.forgetPassword
+    },
     myPermissions(state) {
         //console.log(state.myPermissions);
         return state.myPermissions
@@ -50,11 +53,21 @@ const getters = {
     },
     fullNameEmployee(state) {
         return state.isEmployeeLogin.first_name + ' ' + state.isEmployeeLogin.last_name;
-    }
+    },
+    getUsers(state) {
+        return state.forgetPassword
+    },
 };
 
 const actions = {
-    isEmployeeRegister(context, payload) {
+
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
+    async isEmployeeRegister(context, payload) {
         const register = {
             first_name: payload.first_name,
             last_name: payload.last_name,
@@ -67,13 +80,23 @@ const actions = {
             home_address: payload.home_address,
             work_address: payload.work_address,
         };
-        Axios.post(Axios.defaults.baseURL + 'register', register)
+        await this.$axios.post('register', register)
             .then(res => {
                 const isRegister = res.data.data.data;
                 context.commit('isRegister', isRegister);
+            })
+            .catch(err => {
+                error(err);
             });
 
     },
+
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async isEmployeeLogin(context, payload) {
         const login = {
             username: payload.username,
@@ -92,7 +115,7 @@ const actions = {
             for (let i = 0; i < permissions.length; i++) {
                 myPermissions[i] = permissions[i].Permission.name;
             }
-            console.log(myPermissions);
+
             window.localStorage.setItem('permissions', myPermissions);
             context.commit('myPermissions', myPermissions);
 
@@ -100,67 +123,26 @@ const actions = {
             window.localStorage.setItem('full_name', full_name);
             window.localStorage.setItem('is-admin', is_admin);
             window.localStorage.setItem('roles', roles);
-            //alert(permissions);
-            /*let myPermissions = [];
-            for (let i = 0; i < permissions.length; i++) {
-                myPermissions = permissions[i].permissionId;
-            }
-            context.commit('myPermissions', myPermissions);*/
 
             await this.$auth.setUser(username);
             await this.$auth.setUserToken(token);
             await this.$router.push('/panel/dashboard');
         }
-        /*.then(res => {
-            const employee = res.data.data;
-            const tokenEmployee = employee.accessToken;
-            const isLogin = {
-                username: employee.username,
-                first_name: employee.first_name,
-                last_name: employee.last_name,
-            };
-            context.state.isEmployeeLogin.first_name = employee.first_name;
-            context.state.isEmployeeLogin.last_name = employee.last_name;
-            context.state.isEmployeeLogin.username = employee.username;
-
-            let is_employee = isLogin.first_name + ' ' + isLogin.last_name;
-            let is_admin = isLogin.username;
-
-            window.localStorage.setItem('token-employee', tokenEmployee);
-            window.localStorage.setItem('is-admin', is_admin);
-            window.localStorage.setItem('is-employee', is_employee);
-
-            //window.localStorage.setItem('token-employee', JSON.stringify(isLogin));
-
-            //if (JSON.parse(window.localStorage.getItem('token')) != null)
-            if (window.localStorage.getItem('token-employee') != null && window.localStorage.getItem('is-admin') != null) {
-                if (is_admin === 'admin') {
-                    this.$router.push('/panel/dashboard');
-                    //location.reload();
-                } else {
-                    this.$router.push('/panel/dashboard');
-                    //location.reload();
-                }
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })*/
     },
-    async isEmployeeLogout(context) {
-        /*window.localStorage.removeItem('token-employee');
-        window.localStorage.removeItem('is-admin');
-        window.location.reload();*/
 
+    /**
+     *
+     * @param context
+     * @returns {Promise<void>}
+     */
+    async isEmployeeLogout(context) {
         await this.$axios.get('logout');
 
         window.localStorage.removeItem('full_name');
         window.localStorage.removeItem('username');
         window.localStorage.removeItem('is-admin');
         window.localStorage.removeItem('roles');
-        /*for (let i = 0; i < permissions.length; i++) {
-            window.localStorage.setItem(`permissions[${i}]`, permissions[i].permissionId);
-        }*/
+
         window.localStorage.removeItem('permissions');
 
         delete window.localStorage.getItem('full_name');
@@ -190,7 +172,13 @@ const actions = {
             .catch(err => {
             })*/
     },
-    isUserRegister(context, payload) {
+
+    /**
+     *
+     * @param context
+     * @param payload
+     */
+    async isUserRegister(context, payload) {
         const register = {
             first_name: payload.first_name,
             last_name: payload.last_name,
@@ -204,202 +192,133 @@ const actions = {
             home_address: payload.home_address,
             work_address: payload.work_address,
         };
-        Axios.post(Axios.defaults.baseURL + 'register', register)
-            .then(res => {
-                switch (res.status) {
-                    case 201:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const isRegister = res.data.data;
-                                context.commit('isRegister', isRegister);
-                                this.$router.push('/panel/login');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        alert("ok");
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+        await this.$axios.post('register', register)
+            .then(async res => {
+                const isRegister = res.data.data;
+                context.commit('isRegister', isRegister);
+                await success(res);
+                this.$router.push('/panel/login');
             }).catch(err => {
-            switch (err.response.status) {
-                case 422:
-                    for (let i = 0; i < err.response.data.errors.length; i++) {
-                        Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                            .then(() => {
-
-                            });
-                    }
-                    break;
-                case 503:
-                    for (let i = 0; i < err.response.data.errors.length; i++) {
-                        Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                            .then(() => {
-
-                            });
-                    }
-                    break;
-                default:
-                    Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                    break;
-            }
-        })
+                error(err);
+            })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async isUserLogin(context, payload) {
-        try {
-            const login = {
-                google_rECAPTCHA: payload.google_rECAPTCHA,
-                username: payload.username,
-                password: payload.password,
-            };
-            await this.$axios.post('login', login);
-            /*.then(res => {
-                const user = res.data.data;
-                const tokenUser = user.accessToken;
-                const isLogin = {
-                    username: user.username,
-                    first_name: user.first_name,
-                    last_name: user.last_name,
-                };
+        const login = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            username: payload.username,
+            password: payload.password,
+        };
+
+        await this.$axios.post('login', login)
+            .then(async (result) => {
+                if (result) {
+                    const auth = await this.$auth.loginWith('local', {data: login});
+                    if (auth) {
+                        const username = auth.data.data.username;
+                        const full_name = auth.data.data.first_name + ' ' + auth.data.data.last_name;
+                        const token = auth.data.data.accessToken;
+                        window.localStorage.setItem('username', username);
+                        window.localStorage.setItem('full_name', full_name);
+                        await this.$auth.setUser(username);
+                        await this.$auth.setUserToken(token);
+                        await this.$router.push('/')
+                    }
+                }
             })
-            .catch(err => {
-                console.log(err);
-            });*/
-            const auth = await this.$auth.loginWith('local', {data: login});
-            if (auth) {
-
-                const username = auth.data.data.username;
-                const full_name = auth.data.data.first_name + ' ' + auth.data.data.last_name;
-                const token = auth.data.data.accessToken;
-
-                window.localStorage.setItem('username', username);
-                window.localStorage.setItem('full_name', full_name);
-                //window.localStorage.getItem(user);
-                /*console.log(user);
-                console.log(token);*/
-                //this.$auth.user = user;
-                await this.$auth.setUser(username);
-                await this.$auth.setUserToken(token);
-                //console.log(this.$auth.user);
-                //this.$auth.strategy.token.set(token);
-                /*console.log(this.$auth.user);
-                this.$auth.setUserToken(token);*/
-                //this.$auth.setStrategy('local');
-                //this.$auth.loggedIn = true;
-                //console.log(this.$auth);
-                /*const loggedIn = true;
-                const user = {
-                    first_name: auth.data.data.first_name,
-                    last_name: auth.data.data.last_name,
-                    username: auth.data.data.username,
-                };
-                context.isUserLogin = user.first_name;
-                context.isUserLogin = user.last_name;
-                context.isUserLogin = user.username;
-
-                console.log(user);
-                context.commit('isAuthenticated', loggedIn);
-                context.commit('loggedInUser', user);*/
-
-                this.$router.push('/')
-            }
-        } catch (err) {
-            error(err);
-            return this.$router.push('errors/err_401');
-            //error(err);
-            //console.log(e);
-            //this.error = e.response.data.message
-        }
-        /*context.state.isUserLogin.first_name = user.first_name;
-        context.state.isUserLogin.last_name = user.last_name;
-
-        let full_name = isLogin.first_name + ' ' + isLogin.last_name;
-        let username = isLogin.username;
-
-        window.localStorage.setItem('token-user', tokenUser);
-        window.localStorage.setItem('full_name', full_name);
-        window.localStorage.setItem('username', username);*/
-
-        /*if (window.localStorage.getItem('token-user') != null) {
-            if (username) {
-                this.$router.push('/');
-                window.location.reload();
-            } else {
-                this.$router.push('/login');
-                //location.reload();
-            }
-        }*/
-
-        /*try {
-            const login = {
-                username: payload.username,
-                password: payload.password,
-            };
-            let response = await this.$auth.loginWith('customStrategy', { data: login });
-            console.log(response)
-        } catch (err) {
-            console.log(err)
-        }*/
+            .catch(async err => {
+                await error(err);
+                return this.$router.push('errors/401')
+            });
     },
+
+    /**
+     *
+     * @param context
+     * @returns {Promise<void>}
+     */
     async isUserLogout(context) {
-        await this.$axios.get('logout');
+        await this.$axios.get('logout')
+            .then(async result => {
+                if (result) {
+                    window.localStorage.removeItem('username');
+                    window.localStorage.removeItem('full_name');
 
-        window.localStorage.removeItem('username');
-        window.localStorage.removeItem('full_name');
-
-        delete window.localStorage.getItem('username');
-        delete window.localStorage.getItem('full_name');
-        /*await this.$axios.get('logout', {
-            headers: {
-                Authorization: 'Bearer ' + this.$auth.strategy.token.get(),
-            }
-        });*/
-        await this.$auth.logout();
-        /*Axios.get(Axios.defaults.baseURL + 'logout', {
-            headers: {
-                Authorization: 'Bearer ' + context.state.tokenUser,
-            }
-        })
-            .then(() => {
-                window.localStorage.removeItem('token-user');
-                window.localStorage.removeItem('is-user');
-                delete context.state.tokenUser;
-                delete context.state.isUser;
-                window.location.reload();
+                    delete window.localStorage.getItem('username');
+                    delete window.localStorage.getItem('full_name');
+                    await this.$auth.logout();
+                }
             })
             .catch(err => {
-            })*/
+                error(err);
+            });
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
+    async forgetPassword(context, payload) {
+        const forgetPassword = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            email: payload.email,
+        };
+        await this.$axios.post('forget-password', forgetPassword)
+            .then(async (res) => {
+                const forgetPassword = res.data.data.data;
+                console.log(forgetPassword);
+                //window.localStorage.setItem('forget-password', forgetPassword);
+                context.commit('forgetPassword', forgetPassword);
+                //console.log(forgetPassword);
+                await success(res);
+                return this.$router.push('/')
+            }).catch((err) => {
+                error(err)
+            });
+    },
+
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
+    async resetPassword(context, payload) {
+        const resetPassword = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            signature: payload.signature,
+            current_password: payload.current_password,
+            new_password: payload.new_password,
+            new_confirmation_password: payload.new_confirmation_password,
+        };
+        await this.$axios.post('reset-password/:signature', resetPassword)
+            .then(async (res) => {
+                const forgetPassword = res.data.data.data;
+                //window.localStorage.setItem('forget-password', forgetPassword);
+                context.commit('forgetPassword', forgetPassword);
+                await success(res);
+                return this.$router.push('/')
+            }).catch((err) => {
+                error(err)
+            });
+    },
 };
 
 const mutations = {
-    /*isAuthenticated(state, payload) {
-        state.auth.loggedIn = payload.loggedIn;
+    forgetPassword(state, payload) {
+        state.forgetPassword = payload
     },
-    loggedInUser(state, payload) {
-        state.auth.user = payload.user;
-        console.log(state.auth.user)
-    },*/
     myPermissions(state, payload) {
         console.log(payload.myPermissions);
         state.myPermissions = payload.myPermissions;
-        //console.log(state.myPermissions);
     },
     accessToken(state, payload) {
         state.token = payload.token
