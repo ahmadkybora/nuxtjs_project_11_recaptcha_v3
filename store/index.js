@@ -8,7 +8,6 @@ Axios.defaults.baseURL = 'http://localhost:3001/api/';
 
 import Auth from './modules/auth';
 import Users from './modules/users';
-import Employees from './modules/employees';
 import Products from './modules/products';
 import ProductCategories from './modules/productCategories';
 import Articles from './modules/articles';
@@ -42,32 +41,13 @@ if (userToken !== null && userToken !== undefined) {
 const createStore = () => {
 
     return new Vuex.Store({
-        state: () => ({
-            //true: 'true',
-            /*      tokenEmployee: window.localStorage.getItem('token-employee'),
-                  tokenUser: window.localStorage.getItem('token-user'),*/
-            /*auth: {
-                loggedIn: '',
-                user: {
-                    username: 'ahmad'
-                },
-            }*/
-        }),
+        state: () => ({}),
         actions: {},
         mutations: {},
-        getters: {
-            /*isAuthenticated(state) {
-                return state.auth.loggedIn
-            },
-
-            loggedInUser(state) {
-                return state.auth.user
-            }*/
-        },
+        getters: {},
         modules: {
             Auth,
             Users,
-            Employees,
             Products,
             ProductCategories,
             Articles,

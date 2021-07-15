@@ -1,8 +1,4 @@
-import Axios from 'axios'
-import Swal from 'sweetalert2';
-
-window.Swal = Swal;
-import HelperFunctions from '../../helpers/HelperFunctions';
+import {success, error} from '../../helpers/ErrorHandler';
 
 const state = () => ({
     isProducts: {},
@@ -34,8 +30,7 @@ const actions = {
                 //context.commit('popularProducts', popularProducts)
             })
             .catch(err => {
-                Swal.fire('Warning!', err, 'warning',
-                );
+                error(err);
             })
     },
 
@@ -46,16 +41,23 @@ const actions = {
      * @returns {Promise<void>}
      */
     async getProducts(context, page = 1) {
-        await Axios.get(Axios.defaults.baseURL + `panel/products?page= ${page}`)
+        await this.$axios.get(`panel/products?page= ${page}`)
             .then(res => {
                 const getProducts = res.data.data;
                 console.log(getProducts);
                 context.commit('getProducts', getProducts)
             })
             .catch(err => {
-                console.log(err)
+                error(err);
             })
     },
+
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async isProductUpdate(context, payload) {
         const isUpdate = {
             id: payload.id,
@@ -66,31 +68,12 @@ const actions = {
             icon: payload.icon,
             status: payload.status,
         };
-        await Axios.patch(Axios.defaults.baseURL + 'panel/products/' + payload.id, isUpdate)
+        await this.$axios.patch(`panel/products/${payload.id}`, isUpdate)
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                HelperFunctions.closeModal();
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-                                location.reload();
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+
             })
             .catch(err => {
-                console.log(err)
+                error(err);
             })
     },
 
@@ -110,66 +93,28 @@ const actions = {
         formData.append("image", payload.image);
         formData.append("status", payload.status);
 
-        await Axios.post(Axios.defaults.baseURL + 'panel/products/store', formData,
+        await this.$axios.post('panel/products/store', formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
             .then(res => {
-                switch (res.status) {
-                    case 201:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getProducts = res.data.data;
-                                context.commit('getProducts', getProducts);
-                                this.$router.push('/panel/products');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        alert("ok");
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
-            }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 503:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getProducts = res.data.data;
+                context.commit('getProducts', getProducts);
+                this.$router.push('/panel/products');
+            })
+            .catch(err => {
+                error(err);
             })
     },
+
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async deleteProduct(context, payload) {
         await Swal.fire({
             title: 'Are you sure?',
@@ -212,261 +157,96 @@ const actions = {
             }
         });
     },
-    uploadFile() {
-        /*console.log([...file])
-        axios.post('/import', file,{ headers: {
-                'Content-Type': 'multipart/form-data'
-            }})
-            .then(response => {
-                console.log(response.data)
-                context.commit('importTodos', response.data)
-            })
-            .catch(error => {
-                console.log(error.response.data)
-            })*/
-    },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     * @constructor
+     */
     async ProductLike(context, payload) {
         const ProductLike = {
             username: payload.username,
             productId: payload.productId,
         };
-        await Axios.post(Axios.defaults.baseURL + 'product-likes', ProductLike)
+        await this.$axios.post('product-likes', ProductLike)
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getProducts = res.data.data;
-                                context.commit('getProducts', getProducts);
-                                this.$router.push('/panel/products');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        alert("ok");
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
-            }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 503:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getProducts = res.data.data;
+                context.commit('getProducts', getProducts);
+                this.$router.push('/panel/products');
+            })
+            .catch(err => {
+                error(err);
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     * @constructor
+     */
     async ProductDisLike(context, payload) {
         const ProductLike = {
             username: payload.username,
             productId: payload.productId,
         };
-        await Axios.post(Axios.defaults.baseURL + 'product-dislikes', ProductLike)
+        await this.$axios.post('product-dislikes', ProductLike)
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getProducts = res.data.data;
-                                context.commit('getProducts', getProducts);
-                                this.$router.push('/');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        alert("ok");
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
-            }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 503:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getProducts = res.data.data;
+                context.commit('getProducts', getProducts);
+                this.$router.push('/');
+            })
+            .catch(err => {
+                error(err);
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     * @constructor
+     */
     async ProductFavorite(context, payload) {
         const ProductFavorite = {
             username: payload.username,
             productId: payload.productId,
         };
-        await Axios.post(Axios.defaults.baseURL + 'product-favorite', ProductFavorite)
+        await this.$axios.post('product-favorite', ProductFavorite)
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getProducts = res.data.data;
-                                context.commit('getProducts', getProducts);
-                                this.$router.push('/panel/products');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        alert("ok");
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
-            }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 503:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getProducts = res.data.data;
+                context.commit('getProducts', getProducts);
+                this.$router.push('/panel/products');
+            })
+            .catch(err => {
+                error(err);
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     * @constructor
+     */
     async ProductUnFavorite(context, payload) {
         const ProductUnFavorite = {
             username: payload.username,
             productId: payload.productId,
         };
-        await Axios.post(Axios.defaults.baseURL + 'product-unfavorite', ProductUnFavorite)
+        await this.$axios.post('product-unfavorite', ProductUnFavorite)
             .then(res => {
-                switch (res.status) {
-                    case 200:
-                        Swal.fire('Success!', res.data.message, 'success')
-                            .then(() => {
-                                const getProducts = res.data.data;
-                                context.commit('getProducts', getProducts);
-                                this.$router.push('/');
-                            });
-                        break;
-                    case 403:
-                        Swal.fire('Warning!', res.data.message, 'warning')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 422:
-                        alert("ok");
-                        Swal.fire('Error!', 'whooops', 'error')
-                            .then(() => {
-
-                            });
-                        break;
-                    case 503:
-                        Swal.fire('Danger!', 'Service is Unavailable', 'error');
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
-            }).catch(err => {
-                switch (err.response.status) {
-                    case 422:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    case 503:
-                        for (let i = 0; i < err.response.data.errors.length; i++) {
-                            Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
-                                .then(() => {
-
-                                });
-                        }
-                        break;
-                    default:
-                        Swal.fire('Warning!', 'Your Basic Information', 'warning');
-                        break;
-                }
+                const getProducts = res.data.data;
+                context.commit('getProducts', getProducts);
+                this.$router.push('/');
+            })
+            .catch(err => {
+                error(err);
             })
     }
 };

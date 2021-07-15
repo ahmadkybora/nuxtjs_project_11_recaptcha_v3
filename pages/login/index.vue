@@ -51,7 +51,7 @@
         //middleware: 'isUserLoggedIn',
         //middleware: 'guest',
         layout: 'auth',
-        name: 'Login',
+        name: 'Index',
         data() {
             return {
                 username: '',

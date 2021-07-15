@@ -1,5 +1,10 @@
 import {success, error} from '../../helpers/ErrorHandler';
 
+/*
+|--------------------------------------------------------------------------
+| State Part
+|--------------------------------------------------------------------------
+*/
 const state = () => ({
     allArticleCategories: {},
     isArticleCategories: {},
@@ -7,6 +12,11 @@ const state = () => ({
     popularArticleCategories: {},
 });
 
+/*
+|--------------------------------------------------------------------------
+| Getters Part
+|--------------------------------------------------------------------------
+*/
 const getters = {
     allArticleCategories(state) {
         return state.allArticleCategories
@@ -22,6 +32,11 @@ const getters = {
     },
 };
 
+/*
+|--------------------------------------------------------------------------
+| Actions Part
+|--------------------------------------------------------------------------
+*/
 const actions = {
 
     /**
@@ -104,6 +119,11 @@ const actions = {
     },
 };
 
+/*
+|--------------------------------------------------------------------------
+| Mutations Part
+|--------------------------------------------------------------------------
+*/
 const mutations = {
     allArticleCategories(state, payload) {
         state.allArticleCategories = payload
